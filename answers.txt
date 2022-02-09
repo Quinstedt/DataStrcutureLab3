@@ -3,9 +3,9 @@
 ******************************************************************************/
 
 Group members:
-- [...]
-- [...]
-- [...]
+- Emma Litvin
+- Nicole Andrea Quinstedt
+- Karar Eshaba
 
 /******************************************************************************
 ** Task 1: Analyzing the slow program
@@ -17,7 +17,22 @@ Group members:
 **    Explain briefly.
 ******************************************************************************/
 
-[...]
+The asymptotic complexity of findSimilarity is O(N^2).
+
+We decided that D will represent total number of documents and k will represent
+number of 5-grams per document. Therefore, N = D*K will stand for number of all
+5-grams in all documents.
+Analyzing method complexity line by line, we came up will below conclusions:
+- first (outer) for-loop checks all the documents -> O(D),
+- second for-loop checks all the documents optionally except some of them that is
+  specified by condition path1.equals(path2) -> O(D),
+- third for-loop checks all 5-grams in one document -> O(K),
+- fourth for-loop check  all 5-grams in another document -> O(K),
+- increasing similarity takes constant time.
+Due to the fact that all for-loops are nested asymptotic complexity becomes
+O(D*D*K*K*1) -> O(D^2 * K^2)
+
+O(D^2 * K^2) & (N = D*K) -> O(N^2)
 
 /******************************************************************************
 ** 2. How long did the program take on the 'small' and 'medium' directories?
@@ -25,14 +40,30 @@ Group members:
 **    given the asymptotic complexity? Explain very briefly why.
 ******************************************************************************/
 
-[...]
+The run time on 'small' directory is 2,08 seconds.
+The run time on 'medium' directory is 337,50 seconds.
+
+Using provided information that number of 5-grams in small set is 20,000 and
+200,000 in mediums set, we performed below calculation to get estimated run time
+for medium set based on the run time of the small set:
+
+Square of number of 5-grams in medium set devided by square of number of 5-grams
+in small set and multiplied by run time of small set.
+
+(200,000^2) / (20,000^2) * 2,08 = 208 seconds.
 
 /******************************************************************************
 ** 3. How long do you predict the program would take to run on
 **    the 'huge' directory? Show your calculations.
 ******************************************************************************/
 
-[...]
+The run time on 'small' directory is 2,08 seconds.
+Number 5-grams in small set is 20,000.
+Number 5-grams in huge set is 4,000,000.
+
+Estimated run time for the huge set:
+(4,000,000^2) / (20,000^2) * 2,08 = 83200 seconds (approximately 1386,7 minutes
+or 23,1 hours).
 
 /******************************************************************************
 ** Task 2: Using an index
@@ -72,9 +103,9 @@ Group members:
 ** A. Approximately how many hours did you spend on the assignment?
 ******************************************************************************/
 
-[..group member..]:  [..hours..]
-[..group member..]:  [..hours..]
-[..group member..]:  [..hours..]
+Emma Litvin:  2 + 2 hours
+Nicole Andrea Quinstedt: 2 hours
+Karar Eshaba: 2 hours
 
 /******************************************************************************
 ** B. Are there any known bugs / limitations?
