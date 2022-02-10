@@ -96,7 +96,18 @@ public class PlagiarismDetector {
     // Phase 2: Build index of n-grams (not implemented yet).
     static BST<Ngram, ArrayList<Path>> buildIndex(BST<Path, Ngram[]> files) {
       BST<Ngram, ArrayList<Path>> index = new BST<Ngram, ArrayList<Path>>();
-      // TODO: build index of n-grams
+        for (Path path: files) {
+            Ngram[] ngram = files.get(path);
+            for (Ngram currentNgram : ngram) {
+                if (index.containsKey(currentNgram)) {
+                    index.get(currentNgram).add(path);
+                } else {
+                    ArrayList<Path> newPath = new ArrayList<>();
+                    newPath.add(path);
+                    index.put(currentNgram, newPath);
+                }
+            }
+        }
       return index;
     }
 
