@@ -153,27 +153,35 @@ public class ScapegoatTree<Key extends Comparable<Key>, Value> implements Iterab
          * Otherwise, recursively call either put(node.left, key, value) or put(node.right, key, value) ,
          * again using the same logic as BST insertion.
          * Update the node's height and size fields by looking at node.left and node.right .
-         * If node.height - 1 ≤ α log_2(node.size) fails, then rebuild the subtree rooted at this node.
+         * If node.height -1 ≤ α log_2(node.size) fails, then rebuild the subtree rooted at this node.
          * (Notice that we do not explicitly perform the "go upwards in the tree" step)
           */
-
 
         if (cmp < 0) {
             // key is less than node.key
             node.left = put(node.left,key,val);
+
         } else if (cmp > 0) {
             // key is greater than node.key
             node.right = put(node.right,key,val);
+
         } else {
-            // key is equal to node.key
+
             node.val = val;
         }
-
         node.size = 1 + size(node.left) + size(node.right);
         node.height = 1 + Math.max(height(node.left), height(node.right));
 
+        if(node.height -1 > alpha * log2(node.size)){
+             Node rebuiltNode = rebuild(node);
+             rebuiltNode.size = 1 + size(rebuiltNode.left) + size(rebuiltNode.right);
+             rebuiltNode.height = 1 + Math.max(height(rebuiltNode.left), height(rebuiltNode.right));
+
+        return rebuiltNode;
+        }
         return node;
     }
+
 
     // Rebuild a tree to make it perfectly balanced.
     // You do not need to change this method, but need to define 'inorder'
@@ -195,6 +203,9 @@ public class ScapegoatTree<Key extends Comparable<Key>, Value> implements Iterab
     private void inorder(Node node, ArrayList<Node> nodes) {
         // TODO: use in-order traversal to store 'node'
         // and all descendants into 'nodes' ArrayList
+        if(node == null) return;
+
+
         /**
          * Interator() return the a queque. First in First out.
          * InOrder code book:
