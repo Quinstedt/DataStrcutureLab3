@@ -145,16 +145,34 @@ public class ScapegoatTree<Key extends Comparable<Key>, Value> implements Iterab
 
         // TODO: finish implementing put.
         // If you like you can start from the code for put in BST.java.
+            /** DONE */
         // Read the lab instructions for more hints!
+            /** NOT DONE    */
+
+        /**     LAB DESCRIPTION
+         * Otherwise, recursively call either put(node.left, key, value) or put(node.right, key, value) ,
+         * again using the same logic as BST insertion.
+         * Update the node's height and size fields by looking at node.left and node.right .
+         * If node.height - 1 ≤ α log_2(node.size) fails, then rebuild the subtree rooted at this node.
+         * (Notice that we do not explicitly perform the "go upwards in the tree" step)
+          */
+
+
         if (cmp < 0) {
             // key is less than node.key
+            node.left = put(node.left,key,val);
         } else if (cmp > 0) {
             // key is greater than node.key
+            node.right = put(node.right,key,val);
         } else {
             // key is equal to node.key
+            node.val = val;
         }
 
-        throw new UnsupportedOperationException();
+        node.size = 1 + size(node.left) + size(node.right);
+        node.height = 1 + Math.max(height(node.left), height(node.right));
+
+        return node;
     }
 
     // Rebuild a tree to make it perfectly balanced.
@@ -162,8 +180,8 @@ public class ScapegoatTree<Key extends Comparable<Key>, Value> implements Iterab
     // and 'balanceNodes'.
     //
     // Important: this method *returns* the rebuilt tree!
-    // So after you call this method, make sure to use the return value,
-    // not the node that you passed in as a parameter.
+    /**So after you call this method, make sure to use the return value,
+         not the node that you passed in as a parameter.*/
     private Node rebuild(Node node) {
         rebuilds++; // update statistics
 
@@ -177,6 +195,18 @@ public class ScapegoatTree<Key extends Comparable<Key>, Value> implements Iterab
     private void inorder(Node node, ArrayList<Node> nodes) {
         // TODO: use in-order traversal to store 'node'
         // and all descendants into 'nodes' ArrayList
+        /**
+         * Interator() return the a queque. First in First out.
+         * InOrder code book:
+                static void inorder(BinNode rt){
+            if( rt == null return;
+            inorder(rt.left());
+            visit(rt);
+            inorder(rt.right());
+         }
+         *
+        */
+
         throw new UnsupportedOperationException();
     }
 
@@ -190,23 +220,34 @@ public class ScapegoatTree<Key extends Comparable<Key>, Value> implements Iterab
 
         // Midpoint of subarray.
         int mid = (lo+hi)/2;
+        /**
+         * (1) Recursively call balanceNodes on two subarrays:
+         *             (a) everything left of 'mid' -> We use lo and mid-1
+         *             (b) everything right of 'mid'-> We use mid+1 and hi
+         * (2) Make a node containing the key/value at index 'mid',
+         *      which will be the root of the returned BST.
+         *
+         * We create a new node, with the node middle key, and the middle node value    */
+        Node nodeResult = new Node(nodes.get(mid).key, nodes.get(mid).val);
 
-        // TODO: finish this method.
-        //
-        // The algorithm uses divide and conquer. Here is how it
-        // should work.
-        //
-        // (1) Recursively call balanceNodes on two subarrays:
-        //     (a) everything left of 'mid'
-        //     (b) everything right of 'mid'
-        // (2) Make a node containing the key/value at index 'mid',
-        //     which will be the root of the returned BST.
-        // (3) Set the node's children to the BSTs returned by the
-        //     two recursive calls you made in step (1).
-        // (4) Correctly set the 'size' and 'height' fields for the
-        //      node.
-        // (5) Return the node!
-        throw new UnsupportedOperationException();
+        /**
+            (3) Set the node's children to the BSTs returned by the
+            two recursive calls you made in step (1).   */
+
+        nodeResult.left =balanceNodes(nodes,lo,mid-1);
+        nodeResult.right = balanceNodes(nodes, mid +1 , hi);
+
+        /**
+            (4) Correctly set the 'size' and 'height' fields for the node.
+            (5) Return the node!    */
+        nodeResult.size = 1 + size(nodeResult.left) + size(nodeResult.right);
+        /** I use +1 because I need to count the root
+                * Look method below called:  isSizeConsistent or put ( in BTS class)*/
+        nodeResult.height = 1 + Math.max(height(nodeResult.left),height(nodeResult.right));
+        /** We want the max value of height, we check the left and the right and pick the highest by using Math.max
+            *   Look method below called: isHeightConsistent  */
+
+        return nodeResult;
     }
 
     // Returns the binary logarithm of a number.
