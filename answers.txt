@@ -19,7 +19,7 @@ Group members:
 
 The asymptotic complexity of findSimilarity is O(N^2).
 
-We decided that D will represent total number of documents and k will represent
+We decided that D will represent total number of documents and K will represent
 number of 5-grams per document. Therefore, N = D*K will stand for number of all
 5-grams in all documents.
 Analyzing method complexity line by line, we came up will below conclusions:
@@ -103,9 +103,9 @@ or 23,1 hours).
 ** A. Approximately how many hours did you spend on the assignment?
 ******************************************************************************/
 
-Emma Litvin:  2 + 2 hours
-Nicole Andrea Quinstedt: 2 hours
-Karar Eshaba: 2 hours
+Emma Litvin:  2 + 2 + 3 hours
+Nicole Andrea Quinstedt: 2 + 3 hours
+Karar Eshaba: 2 + 3 hours
 
 /******************************************************************************
 ** B. Are there any known bugs / limitations?
