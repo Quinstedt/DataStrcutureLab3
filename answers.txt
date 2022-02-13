@@ -72,7 +72,27 @@ or 23,1 hours).
 **    Say very briefly how you deduced this.
 ******************************************************************************/
 
-[...]
+When we ran the program, we got below results for three BSTs:
+
+- small set:
+files: BST, size 7, height 7
+index: BST, size 1978, height 35
+similarity: BST, size 23, height 8
+
+- medium set:
+files: BST, size 110, height 110
+index: BST, size 208024, height 50
+similarity: BST, size 984, height 20
+
+As we know insertion and deletion take time proportional to the height of the tree.
+
+Applying this logic, we can deduce that 'files' BST is unbalanced because height
+of this tree has O(n) (small set: n = 7, height = 7; medium set: n = 110,
+height = 110). And once we perform insertion, the asymptotic complexity will still
+remain the same.
+
+BSTs 'index' and 'similarity' are balanced trees, because height for both of them
+is O(log n).
 
 /******************************************************************************
 ** 5 (optional). Is there a simple way to stop these trees becoming unbalanced?
@@ -88,7 +108,9 @@ or 23,1 hours).
 **    and a constant number of duplicate occurrences of 5-grams.
 ******************************************************************************/
 
-[...]
+Asymptotic complexity of buildIndex is (in terms of N)
+
+Asymptotic complexity of findSimilarity is
 
 /******************************************************************************
 ** 7 (optional). What if the total similarity score is an arbitrary number S,
@@ -103,15 +125,15 @@ or 23,1 hours).
 ** A. Approximately how many hours did you spend on the assignment?
 ******************************************************************************/
 
-Emma Litvin:  2 + 2 + 3 hours
-Nicole Andrea Quinstedt: 2 + 3 hours
-Karar Eshaba: 2 + 3 hours
+Emma Litvin:  2 + 2 + 3 + 4 + 2 hours
+Nicole Andrea Quinstedt: 2 + 3 + 4 + 5 hours
+Karar Eshaba: 2 + 3 + 3 hours
 
 /******************************************************************************
 ** B. Are there any known bugs / limitations?
 ******************************************************************************/
 
-[...]
+No
 
 /******************************************************************************
 ** C. Did you collaborate with any other students on this lab?
@@ -120,13 +142,13 @@ Karar Eshaba: 2 + 3 hours
 **    may have used in creating your design.
 ******************************************************************************/
 
-[...]
+No
 
 /******************************************************************************
 ** D. Describe any serious problems you encountered.                    
 ******************************************************************************/
 
-[...]
+N/A
 
 /******************************************************************************
 ** E. List any other comments here.
@@ -134,4 +156,4 @@ Karar Eshaba: 2 + 3 hours
 **    from doing the assignment, and whether you enjoyed it.                                             
 ******************************************************************************/
 
-[...]
+

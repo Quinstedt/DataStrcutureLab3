@@ -55,7 +55,6 @@ public class ScapegoatTree<Key extends Comparable<Key>, Value> implements Iterab
      */
     public ScapegoatTree() {
     }
-
     /**
      * Returns true if this map is empty.
      * @return {@code true} if this map is empty, {@code false} otherwise
@@ -145,7 +144,6 @@ public class ScapegoatTree<Key extends Comparable<Key>, Value> implements Iterab
 
         // TODO: finish implementing put.
         // If you like you can start from the code for put in BST.java.
-            /** DONE */
         // Read the lab instructions for more hints!
             /** NOT DONE    */
 
@@ -159,11 +157,11 @@ public class ScapegoatTree<Key extends Comparable<Key>, Value> implements Iterab
 
         if (cmp < 0) {
             // key is less than node.key
-            node.left = put(node.left,key,val);
+            node.left = put(node.left, key, val);
 
         } else if (cmp > 0) {
             // key is greater than node.key
-            node.right = put(node.right,key,val);
+            node.right = put(node.right, key, val);
 
         } else {
 
@@ -203,7 +201,8 @@ public class ScapegoatTree<Key extends Comparable<Key>, Value> implements Iterab
     private void inorder(Node node, ArrayList<Node> nodes) {
         // TODO: use in-order traversal to store 'node'
         // and all descendants into 'nodes' ArrayList
-        if(node == null) return;
+
+        if (node == null) return;
 
 
         /**
@@ -230,7 +229,7 @@ public class ScapegoatTree<Key extends Comparable<Key>, Value> implements Iterab
             return null;
 
         // Midpoint of subarray.
-        int mid = (lo+hi)/2;
+        int mid = (lo + hi) / 2;
         /**
          * (1) Recursively call balanceNodes on two subarrays:
          *             (a) everything left of 'mid' -> We use lo and mid-1
@@ -245,17 +244,17 @@ public class ScapegoatTree<Key extends Comparable<Key>, Value> implements Iterab
             (3) Set the node's children to the BSTs returned by the
             two recursive calls you made in step (1).   */
 
-        nodeResult.left =balanceNodes(nodes,lo,mid-1);
-        nodeResult.right = balanceNodes(nodes, mid +1 , hi);
+        nodeResult.left = balanceNodes(nodes,lo,mid - 1);
+        nodeResult.right = balanceNodes(nodes, mid + 1 , hi);
 
         /**
             (4) Correctly set the 'size' and 'height' fields for the node.
             (5) Return the node!    */
         nodeResult.size = 1 + size(nodeResult.left) + size(nodeResult.right);
-        /** I use +1 because I need to count the root
+        /** We use + 1 because we need to count the root
                 * Look method below called:  isSizeConsistent or put ( in BTS class)*/
-        nodeResult.height = 1 + Math.max(height(nodeResult.left),height(nodeResult.right));
-        /** We want the max value of height, we check the left and the right and pick the highest by using Math.max
+        nodeResult.height = 1 + Math.max(height(nodeResult.left), height(nodeResult.right));
+        /** We want the max value of height, we check the left and the right and pick the highest by using Math.max.
             *   Look method below called: isHeightConsistent  */
 
         return nodeResult;

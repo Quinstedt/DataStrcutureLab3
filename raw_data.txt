@@ -38,3 +38,27 @@ Plagiarism report:
    67 similarity: documents/medium/Children's rights.txt and documents/medium/Convention on the Rights of the Child.txt
    58 similarity: documents/medium/Pippi Goes on Board (film).txt and documents/medium/Pippi Longstocking (1969 film).txt
    52 similarity: documents/medium/Children's literature.txt and documents/medium/Picture book.txt
+
+****************************************************************************************************
+After improvements of methods:
+
+Reading all input files took 0,29 seconds.
+Building n-gram index took 0,54 seconds.
+Computing similarity scores took 0,26 seconds.
+Finding the most similar files took 0,01 seconds.
+In total the program took 1,13 seconds.
+
+Balance statistics:
+  files: BST, size 110, height 110
+  index: BST, size 208024, height 50
+  similarity: BST, size 874, height 23
+
+Plagiarism report:
+   79 similarity: documents/medium/Find me.txt and documents/medium/Plagiarism.txt
+   71 similarity: documents/medium/Pippi Longstocking (1969 TV series).txt and documents/medium/Pippi Longstocking (novel).txt
+   67 similarity: documents/medium/More About the Children of Noisy Village.txt and documents/medium/The Children of Noisy Village (film).txt
+   66 similarity: documents/medium/Children's rights.txt and documents/medium/Convention on the Rights of the Child.txt
+   57 similarity: documents/medium/Pippi Goes on Board (film).txt and documents/medium/Pippi Longstocking (1969 film).txt
+   51 similarity: documents/medium/Children's literature.txt and documents/medium/Picture book.txt
+
+***************************************************************************************************
