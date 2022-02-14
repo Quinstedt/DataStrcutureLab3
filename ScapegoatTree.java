@@ -55,6 +55,7 @@ public class ScapegoatTree<Key extends Comparable<Key>, Value> implements Iterab
      */
     public ScapegoatTree() {
     }
+
     /**
      * Returns true if this map is empty.
      * @return {@code true} if this map is empty, {@code false} otherwise
@@ -142,26 +143,13 @@ public class ScapegoatTree<Key extends Comparable<Key>, Value> implements Iterab
 
         int cmp = key.compareTo(node.key);
 
-        // TODO: finish implementing put.
-        // If you like you can start from the code for put in BST.java.
-        // Read the lab instructions for more hints!
-            /** NOT DONE    */
-
-        /**     LAB DESCRIPTION
-         * Otherwise, recursively call either put(node.left, key, value) or put(node.right, key, value) ,
-         * again using the same logic as BST insertion.
-         * Update the node's height and size fields by looking at node.left and node.right .
-         * If node.height -1 ≤ α log_2(node.size) fails, then rebuild the subtree rooted at this node.
-         * (Notice that we do not explicitly perform the "go upwards in the tree" step)
-          */
-
         if (cmp < 0) {
             // key is less than node.key
-            node.left = put(node.left, key, val);
+            node.left = put(node.left,key,val);
 
         } else if (cmp > 0) {
             // key is greater than node.key
-            node.right = put(node.right, key, val);
+            node.right = put(node.right,key,val);
 
         } else {
 
@@ -171,91 +159,48 @@ public class ScapegoatTree<Key extends Comparable<Key>, Value> implements Iterab
         node.height = 1 + Math.max(height(node.left), height(node.right));
 
         if(node.height -1 > alpha * log2(node.size)){
-             Node rebuiltNode = rebuild(node);
-             rebuiltNode.size = 1 + size(rebuiltNode.left) + size(rebuiltNode.right);
-             rebuiltNode.height = 1 + Math.max(height(rebuiltNode.left), height(rebuiltNode.right));
-
-        return rebuiltNode;
+            Node rebuiltNode = rebuild(node);
+            rebuiltNode.size = 1 + size(rebuiltNode.left) + size(rebuiltNode.right);
+            rebuiltNode.height = 1 + Math.max(height(rebuiltNode.left), height(rebuiltNode.right));
+            return rebuiltNode;
         }
         return node;
     }
 
 
-    // Rebuild a tree to make it perfectly balanced.
-    // You do not need to change this method, but need to define 'inorder'
-    // and 'balanceNodes'.
-    //
-    // Important: this method *returns* the rebuilt tree!
-    /**So after you call this method, make sure to use the return value,
-         not the node that you passed in as a parameter.*/
     private Node rebuild(Node node) {
         rebuilds++; // update statistics
 
-        ArrayList<Node> nodes = new ArrayList<Node>(size(node));
+        ArrayList<Node> nodes = new ArrayList<>(size(node));
         inorder(node, nodes);
         return balanceNodes(nodes, 0, nodes.size()-1);
+
     }
 
-    // Perform an in-order traversal of the subtree rooted at 'node',
-    // storing its nodes into the ArrayList 'nodes'.
     private void inorder(Node node, ArrayList<Node> nodes) {
-        // TODO: use in-order traversal to store 'node'
-        // and all descendants into 'nodes' ArrayList
 
-        if (node == null) return;
-
-
-        /**
-         * Interator() return the a queque. First in First out.
-         * InOrder code book:
-                static void inorder(BinNode rt){
-            if( rt == null return;
-            inorder(rt.left());
-            visit(rt);
-            inorder(rt.right());
-         }
-         *
-        */
-
-        throw new UnsupportedOperationException();
+        if(node == null) return;
+        inorder(node.left,nodes);
+        nodes.add(node);
+        inorder(node.right,nodes);
     }
 
-    // Given an array of nodes, and two indexes 'lo' and 'hi',
-    // return a balanced BST containing all nodes in the subarray
-    // nodes[lo]..nodes[hi].
+
     private Node balanceNodes(ArrayList<Node> nodes, int lo, int hi) {
         // Base case: empty subarray.
         if (lo > hi)
             return null;
 
         // Midpoint of subarray.
-        int mid = (lo + hi) / 2;
-        /**
-         * (1) Recursively call balanceNodes on two subarrays:
-         *             (a) everything left of 'mid' -> We use lo and mid-1
-         *             (b) everything right of 'mid'-> We use mid+1 and hi
-         * (2) Make a node containing the key/value at index 'mid',
-         *      which will be the root of the returned BST.
-         *
-         * We create a new node, with the node middle key, and the middle node value    */
+        int mid = (lo+hi)/2;
+
         Node nodeResult = new Node(nodes.get(mid).key, nodes.get(mid).val);
 
-        /**
-            (3) Set the node's children to the BSTs returned by the
-            two recursive calls you made in step (1).   */
+        nodeResult.left =balanceNodes(nodes,lo,mid-1);
+        nodeResult.right = balanceNodes(nodes, mid +1 , hi);
 
-        nodeResult.left = balanceNodes(nodes,lo,mid - 1);
-        nodeResult.right = balanceNodes(nodes, mid + 1 , hi);
-
-        /**
-            (4) Correctly set the 'size' and 'height' fields for the node.
-            (5) Return the node!    */
         nodeResult.size = 1 + size(nodeResult.left) + size(nodeResult.right);
-        /** We use + 1 because we need to count the root
-                * Look method below called:  isSizeConsistent or put ( in BTS class)*/
-        nodeResult.height = 1 + Math.max(height(nodeResult.left), height(nodeResult.right));
-        /** We want the max value of height, we check the left and the right and pick the highest by using Math.max.
-            *   Look method below called: isHeightConsistent  */
+        nodeResult.height = 1 + Math.max(height(nodeResult.left),height(nodeResult.right));
 
         return nodeResult;
     }
