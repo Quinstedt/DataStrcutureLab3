@@ -17,7 +17,7 @@ public class PlagiarismDetector {
     public static void main(String[] args) throws IOException {
          // If you don't want to specify arguments on the command-line, just uncomment this block.
         if (args.length == 0) {
-            args = new String[] { "documents/badforbst" }; // Path to the document set.
+            args = new String[] { "documents/small" }; // Path to the document set.
         }
 
         // If no arguments are given, ask for them.
@@ -169,7 +169,7 @@ public class PlagiarismDetector {
                     PathPair pair = new PathPair(path1 ,path2);
                     if (!similarity.containsKey(pair)) {
         /** Used the same as above */
-                        similarity.put(pair, 0);
+                        similarity.put(pair, 1);
                     } else {
         /** Used the same as above
          * +1 is because we are using the index and we need to take to account index 0. */
