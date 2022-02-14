@@ -125,7 +125,7 @@ Asymptotic complexity of findSimilarity is
 ** A. Approximately how many hours did you spend on the assignment?
 ******************************************************************************/
 
-Emma Litvin:  2 + 2 + 3 + 4 + 2 hours
+Emma Litvin:  2 + 2 + 3 + 4 + 2 + 1 hours
 Nicole Andrea Quinstedt: 2 + 3 + 4 + 5 hours
 Karar Eshaba: 2 + 3 + 3 hours
 

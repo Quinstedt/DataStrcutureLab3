@@ -145,11 +145,11 @@ public class ScapegoatTree<Key extends Comparable<Key>, Value> implements Iterab
 
         if (cmp < 0) {
             // key is less than node.key
-            node.left = put(node.left,key,val);
+            node.left = put(node.left, key, val);
 
         } else if (cmp > 0) {
             // key is greater than node.key
-            node.right = put(node.right,key,val);
+            node.right = put(node.right, key, val);
 
         } else {
 
@@ -179,12 +179,11 @@ public class ScapegoatTree<Key extends Comparable<Key>, Value> implements Iterab
 
     private void inorder(Node node, ArrayList<Node> nodes) {
 
-        if(node == null) return;
-        inorder(node.left,nodes);
+        if (node == null) return;
+        inorder(node.left, nodes);
         nodes.add(node);
-        inorder(node.right,nodes);
+        inorder(node.right, nodes);
     }
-
 
     private Node balanceNodes(ArrayList<Node> nodes, int lo, int hi) {
         // Base case: empty subarray.
@@ -192,15 +191,15 @@ public class ScapegoatTree<Key extends Comparable<Key>, Value> implements Iterab
             return null;
 
         // Midpoint of subarray.
-        int mid = (lo+hi)/2;
+        int mid = (lo + hi) / 2;
 
         Node nodeResult = new Node(nodes.get(mid).key, nodes.get(mid).val);
 
-        nodeResult.left =balanceNodes(nodes,lo,mid-1);
-        nodeResult.right = balanceNodes(nodes, mid +1 , hi);
+        nodeResult.left = balanceNodes(nodes, lo,mid - 1);
+        nodeResult.right = balanceNodes(nodes, mid + 1, hi);
 
         nodeResult.size = 1 + size(nodeResult.left) + size(nodeResult.right);
-        nodeResult.height = 1 + Math.max(height(nodeResult.left),height(nodeResult.right));
+        nodeResult.height = 1 + Math.max(height(nodeResult.left), height(nodeResult.right));
 
         return nodeResult;
     }
