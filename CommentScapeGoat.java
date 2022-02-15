@@ -197,9 +197,19 @@ import java.util.Iterator;
             }
             node.size = 1 + size(node.left) + size(node.right);
             node.height = 1 + Math.max(height(node.left), height(node.right));
-
+            /**
+             *Each node in the tree satisfies h - 1 ≤ α log_2(s),
+             * where h and s are the height and size of the subtree rooted at that node.
+             *
+             * there we chech if h -1 is higher, in that case is breaking the invariant
+             * and whenever we find a node that violates the balance invariant,
+             * rebuild the subtree rooted at that node.
+             */
             if(node.height -1 > alpha * log2(node.size)){
                 Node rebuiltNode = rebuild(node);
+                /**
+                 *  we need to update the height and the size.
+                 */
                 rebuiltNode.size = 1 + size(rebuiltNode.left) + size(rebuiltNode.right);
                 rebuiltNode.height = 1 + Math.max(height(rebuiltNode.left), height(rebuiltNode.right));
 
@@ -220,6 +230,9 @@ import java.util.Iterator;
             rebuilds++; // update statistics
 
             ArrayList<Node> nodes = new ArrayList<>(size(node));
+            /**
+             * Creating or adding to an ArrayList takes O(1) time
+             */
             inorder(node, nodes);
             return balanceNodes(nodes, 0, nodes.size()-1);
         }
@@ -227,11 +240,14 @@ import java.util.Iterator;
         // Perform an in-order traversal of the subtree rooted at 'node',
         // storing its nodes into the ArrayList 'nodes'.
         private void inorder(Node node, ArrayList<Node> nodes) {
-            
+
             if(node == null) return;
             inorder(node.left,nodes);
             /**   We get the node into the node at is most to the left and we add it to the array list called nodes.
              *      Look in the book, same code but with "visit".
+             *
+             *    * Creating or adding to an ArrayList takes O(1) time
+             *
              * */
             nodes.add(node.left);
             inorder(node.right,nodes);
@@ -253,14 +269,40 @@ import java.util.Iterator;
              *             (b) everything right of 'mid'-> We use mid+1 and hi
              * (2) Make a node containing the key/value at index 'mid',
              *      which will be the root of the returned BST.
-             *
-             * We create a new node, with the node middle key, and the middle node value    */
-            System.out.println(nodes.get(mid).key);
+             *----------------------------
+             * We create a new BST called nodeResult, with the node middle key, and the middle node value    */
             Node nodeResult = new Node(nodes.get(mid).key, nodes.get(mid).val);
 
             /**
              (3) Set the node's children to the BSTs returned by the
-             two recursive calls you made in step (1).   */
+             two recursive calls you made in step (1).
+             --------------------------------------------
+               we use now that new node and look in the left and recursively call "balanceNodes" and change the high value
+                to the mid-1.
+       explanation:
+             [ 0 1 2 3 4 5 6 7 8 9]
+
+             mid = (10+0)/2 = 5
+             the mid value is 5 and we need to split the array into 2:
+
+             [ 0 1 2 3 4]  5 [ 6 7 8 9 ]
+
+             5 is inside the nodeResult.( we insert the mid.key and the mid.value)
+
+             so therefore we are going to recursevely call the balancenodes method.
+
+             so that next time it will work with :   [ 0 1 2 3 4]
+             the mid this time is 0+4 / 2 = 2
+             now the value inside the index 2 is added in the resultNode
+             and we slit the array into to
+             [0 1] 2 [ 3 4] and so on.
+
+
+             The same happens later on the right size. and to obtain that we change the lo value to mid +1
+            5 [ 6 7 8 9 ]
+         middle; 6 is the mid +1 = which is the lowest value on the array. and the highest is Hi = 9;
+                 */
+
 
             nodeResult.left =balanceNodes(nodes,lo,mid-1);
             nodeResult.right = balanceNodes(nodes, mid +1 , hi);
@@ -269,11 +311,12 @@ import java.util.Iterator;
              (4) Correctly set the 'size' and 'height' fields for the node.
              (5) Return the node!    */
             nodeResult.size = 1 + size(nodeResult.left) + size(nodeResult.right);
-            /** I use +1 because I need to count the root
-             * Look method below called:  isSizeConsistent or put ( in BTS class)*/
+            /** size for all nodes = all the node to the left  + the nodes to the right + 1;
+             *  I use +1 because I need to count the root */
             nodeResult.height = 1 + Math.max(height(nodeResult.left),height(nodeResult.right));
-            /** We want the max value of height, we check the left and the right and pick the highest by using Math.max
-             *   Look method below called: isHeightConsistent  */
+            /**
+             *   Same principal as in size.  we want the max high of the left size and the right size, find the highest value
+             *   of those and add 1 for the height of the root*/
 
             return nodeResult;
         }
