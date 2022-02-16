@@ -17,7 +17,7 @@ public class PlagiarismDetector {
     public static void main(String[] args) throws IOException {
          // If you don't want to specify arguments on the command-line, just uncomment this block.
         if (args.length == 0) {
-            args = new String[] { "documents/small" }; // Path to the document set.
+            args = new String[] { "documents/huge" }; // Path to the document set.
         }
 
         // If no arguments are given, ask for them.
@@ -108,14 +108,13 @@ public class PlagiarismDetector {
                     /** We add that to ArrayList (as the value) */
                         index.get(currentNgram).add(path);
                     /** If the hashmap doesn't contain the key, we create a new ArrayList */
-                    } else {
+                    }
                     ArrayList<Path> newPath = new ArrayList<>();
                     /** We add the path to the Arraylist */
                     newPath.add(path);
                     /** We create a key with the current Ngram and give it the path
                      by using the created ArrayList and the path inside */
                     index.put(currentNgram, newPath);
-                }
             }
         }
       return index;
@@ -170,11 +169,10 @@ public class PlagiarismDetector {
                     if (!similarity.containsKey(pair)) {
         /** Used the same as above */
                         similarity.put(pair, 1);
-                    } else {
+                    }
         /** Used the same as above
          * +1 is because we are using the index and we need to take to account index 0. */
                         similarity.put(pair, similarity.get(pair) + 1);
-                    }
                 }
             }
         }

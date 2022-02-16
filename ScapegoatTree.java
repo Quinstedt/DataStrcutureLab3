@@ -164,6 +164,7 @@ public class ScapegoatTree<Key extends Comparable<Key>, Value> implements Iterab
             rebuiltNode.height = 1 + Math.max(height(rebuiltNode.left), height(rebuiltNode.right));
             return rebuiltNode;
         }
+
         return node;
     }
 
@@ -193,7 +194,7 @@ public class ScapegoatTree<Key extends Comparable<Key>, Value> implements Iterab
         // Midpoint of subarray.
         int mid = (lo + hi) / 2;
 
-        Node nodeResult = new Node(nodes.get(mid).key, nodes.get(mid).val);
+        Node nodeResult = nodes.get(mid);
 
         nodeResult.left = balanceNodes(nodes, lo,mid - 1);
         nodeResult.right = balanceNodes(nodes, mid + 1, hi);

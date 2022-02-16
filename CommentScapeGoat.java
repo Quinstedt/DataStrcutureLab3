@@ -146,7 +146,6 @@ import java.util.Iterator;
 
             int cmp = key.compareTo(node.key);
 
-
             // If you like you can start from the code for put in BST.java.
             /** DONE */
             // Read the lab instructions for more hints!
@@ -185,14 +184,11 @@ import java.util.Iterator;
              * */
             if (cmp < 0) {
                 // key is less than node.key
-                node.left = put(node.left,key,val);
-
-
+                node.left = put(node.left, key, val);
             } else if (cmp > 0) {
                 // key is greater than node.key
-                node.right = put(node.right,key,val);
+                node.right = put(node.right, key, val);
             } else {
-
                 node.val = val;
             }
             node.size = 1 + size(node.left) + size(node.right);
@@ -205,7 +201,7 @@ import java.util.Iterator;
              * and whenever we find a node that violates the balance invariant,
              * rebuild the subtree rooted at that node.
              */
-            if(node.height -1 > alpha * log2(node.size)){
+            if (node.height - 1 > alpha * log2(node.size)){
                 Node rebuiltNode = rebuild(node);
                 /**
                  *  we need to update the height and the size.
@@ -234,23 +230,22 @@ import java.util.Iterator;
              * Creating or adding to an ArrayList takes O(1) time
              */
             inorder(node, nodes);
-            return balanceNodes(nodes, 0, nodes.size()-1);
+            return balanceNodes(nodes, 0, nodes.size() - 1);
         }
 
         // Perform an in-order traversal of the subtree rooted at 'node',
         // storing its nodes into the ArrayList 'nodes'.
         private void inorder(Node node, ArrayList<Node> nodes) {
 
-            if(node == null) return;
-            inorder(node.left,nodes);
+            if (node == null) return;
+            inorder(node.left, nodes);
             /**   We get the node into the node at is most to the left and we add it to the array list called nodes.
              *      Look in the book, same code but with "visit".
              *
              *    * Creating or adding to an ArrayList takes O(1) time
-             *
              * */
             nodes.add(node.left);
-            inorder(node.right,nodes);
+            inorder(node.right, nodes);
         }
 
         // Given an array of nodes, and two indexes 'lo' and 'hi',
@@ -303,9 +298,8 @@ import java.util.Iterator;
          middle; 6 is the mid +1 = which is the lowest value on the array. and the highest is Hi = 9;
                  */
 
-
-            nodeResult.left =balanceNodes(nodes,lo,mid-1);
-            nodeResult.right = balanceNodes(nodes, mid +1 , hi);
+            nodeResult.left = balanceNodes(nodes, lo,mid - 1);
+            nodeResult.right = balanceNodes(nodes, mid + 1 , hi);
 
             /**
              (4) Correctly set the 'size' and 'height' fields for the node.
