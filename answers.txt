@@ -112,23 +112,22 @@ We decided that D will represent total number of documents and K will represent
 number of 5-grams per document. Therefore, N = D*K will stand for number of all
 5-grams in all documents.
 
-Asymptotic complexity of buildIndex is O(N).
+Asymptotic complexity of buildIndex is O(N * log N).
 Analyzing method complexity line by line, we came up will below conclusions:
 - first (outer) for-loop checks all the documents -> O(D),
 - second (inner) for-loop checks all 5-grams in one document -> O(K),
-- adding element to the array takes constant time.
+- putting elements to the Scapegoat tree -> O(log N).
 Due to the fact that all for-loops are nested asymptotic complexity becomes
-O(D*K*1) -> O(N).
+O(D*K*(log N)) -> O(N * log N).
 
 Asymptotic complexity of findSimilarity is O(N * log N).
 Applying the same logic and analyzing complexity line by line, we concluded
 following:
 - first (outer) for-loop checks all 5-grams in one document -> O(K),
 - second (inner) for-loop checks all the documents -> O(D),
-- computing pairs -> O(log N),
-- adding element to the array -> O(1).
+- computing pairs and putting them in Scapegoat tree -> O(log(log N)) -> O(log N).
 Due to the fact that all for-loops are nested asymptotic complexity becomes
-O(K*D*(log N)*1) -> O(N * Log N).
+O(K*D*(log N)) -> O(N * log N).
 
 /******************************************************************************
 ** 7 (optional). What if the total similarity score is an arbitrary number S,
